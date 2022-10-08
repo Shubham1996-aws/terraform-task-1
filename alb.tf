@@ -36,7 +36,7 @@ resource "aws_lb" "alb" {
   load_balancer_type = "application"
   vpc_id             = [data.aws_vpc.default.id]
   security_groups    = data.aws_security_group.mysg.id
-  subnets            = data.aws_subnets.all.id
+  subnets            = data.aws_subnets.subnet.id
   tags = {
     Name = "application-load_balancer"
   }
