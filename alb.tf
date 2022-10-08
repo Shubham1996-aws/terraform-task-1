@@ -34,15 +34,15 @@ resource "aws_vpc" "main" {
 resource "aws_lb" "alb" {
   name               = "ALB"
   load_balancer_type = "application"
-  vpc_id             = [data.aws_vpc.default.id]
+  #vpc_id             = [data.aws_vpc.default.id]
   security_groups    = data.aws_security_group.mysg.id
   subnets            = data.aws_subnet_ids.subnet.id
   tags = {
     Name = "application-load_balancer"
   }
 
-  resource "aws_lb_listener" "front_end" {
-  load_balancer_arn = aws_lb.front_end.arn
+  resource "aws_lb_listener" "alb-listner" {
+  load_balancer_arn = aws_lb.alb-listner.arn
   port              = "80"
   protocol          = "HTTP"
 
