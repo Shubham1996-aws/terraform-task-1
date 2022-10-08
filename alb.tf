@@ -1,14 +1,3 @@
-data "aws_vpc" "default" {
-  default = true
-}
-
-data "aws_subnet_ids" "subnet" {
-  vpc_id = data.aws_vpc.default.id
-}
-
-data "aws_security_group" "mysg" {
-    vpc_id      = data.aws_vpc.default.id
-}
 # target group
 resource "aws_lb_target_group" "albtg" {
   health_check {
@@ -27,22 +16,19 @@ resource "aws_lb_target_group" "albtg" {
   vpc_id   = data.aws_vpc.default.id
 }
 
-resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
-}
-
 resource "aws_lb" "alb" {
   name               = "ALB"
+  internal = false
   load_balancer_type = "application"
   #vpc_id             = [data.aws_vpc.default.id]
-  security_groups    = data.aws_security_group.mysg.id
-  subnets            = data.aws_subnet_ids.subnet.id
+  security_groups    = [aws_security_group.web-sg.id]
+  subnets            = data.aws_subnet_ids.subnet.ids
   tags = {
     Name = "application-load_balancer"
   }
 
   resource "aws_lb_listener" "alb-listner" {
-  load_balancer_arn = aws_lb.alb-listner.arn
+  load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"
 
