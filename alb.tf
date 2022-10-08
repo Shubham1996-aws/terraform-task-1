@@ -36,7 +36,7 @@ resource "aws_lb" "alb" {
   load_balancer_type = "application"
   vpc_id             = [data.aws_vpc.default.id]
   security_groups    = data.aws_security_group.mysg.id
-  subnets            = data.aws_subnets.subnet.id
+  subnets            = data.aws_subnet.subnet.id
   tags = {
     Name = "application-load_balancer"
   }
@@ -61,5 +61,5 @@ resource "aws_lb_target_group_attachment" "alb-attcah" {
 
 #alb dns
 output "alb_dns" {
-    value = aws_alb.alb.dns_name
+    value = aws_lb.alb.dns_name
 }
