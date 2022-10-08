@@ -27,7 +27,7 @@ resource "aws_lb" "alb" {
     Name = "application-load_balancer"
   }
 }
-  resource "aws_lb_listener" "alb-listner" {
+resource "aws_lb_listener" "alb-listner" {
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"
@@ -42,7 +42,6 @@ resource "aws_lb_target_group_attachment" "alb-attcah" {
   count = length(aws_instance.web)
   target_group_arn = aws_lb_target_group.albtg.arn
   target_id        = aws_instance.web[count.index].id
-}
 }
 
 #alb dns
