@@ -26,7 +26,7 @@ resource "aws_lb" "alb" {
   tags = {
     Name = "application-load_balancer"
   }
-
+}
   resource "aws_lb_listener" "alb-listner" {
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
